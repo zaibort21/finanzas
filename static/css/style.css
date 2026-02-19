@@ -11,14 +11,14 @@ body {
     background-color: #f8fafc;
 }
 
-/* ============= NAVBAR MOBILE-FIRST ============= */
+/* ============= NAVBAR MEJORADO ============= */
 .navbar {
     background: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
 }
 
 .nav-container {
@@ -27,65 +27,162 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    position: relative;
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 700;
+    z-index: 1001;
 }
 
 .logo-icon {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
 }
 
 .logo-text {
     color: #2d3748;
 }
 
+/* Botón hamburguesa mejorado */
 .menu-toggle {
     display: block;
-    font-size: 1.5rem;
+    font-size: 2rem;
     cursor: pointer;
     background: none;
     border: none;
     padding: 0.5rem;
+    color: #2d3748;
+    transition: color 0.3s;
+    z-index: 1001;
+    line-height: 1;
 }
 
+.menu-toggle:hover {
+    color: #48bb78;
+}
+
+/* Menú móvil - versión mejorada */
 .nav-menu {
     display: none;
-    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    padding: 5rem 2rem 2rem;
+    margin: 0;
     list-style: none;
-    padding: 1rem 0;
-    margin-top: 1rem;
-    border-top: 1px solid #e2e8f0;
+    z-index: 1000;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .nav-menu.active {
     display: block;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .nav-menu li {
-    margin: 0.5rem 0;
+    margin: 1rem 0;
+    opacity: 0;
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.nav-menu li:nth-child(1) { animation-delay: 0.1s; }
+.nav-menu li:nth-child(2) { animation-delay: 0.2s; }
+.nav-menu li:nth-child(3) { animation-delay: 0.3s; }
+.nav-menu li:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .nav-menu a {
     display: block;
-    padding: 0.75rem;
+    padding: 1.2rem;
     text-decoration: none;
     color: #4a5568;
-    font-weight: 500;
-    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border-radius: 12px;
     transition: all 0.3s;
+    background: #f7fafc;
+    text-align: center;
+    border: 1px solid #e2e8f0;
 }
 
 .nav-menu a:hover,
 .nav-menu a.active {
     background: #48bb78;
     color: white;
+    transform: scale(1.02);
+    border-color: #48bb78;
+}
+
+/* Overlay cuando el menú está abierto */
+body.menu-open {
+    overflow: hidden;
+}
+
+/* ============= MEDIA QUERY PARA ESCRITORIO ============= */
+@media (min-width: 768px) {
+    .menu-toggle {
+        display: none;
+    }
+
+    .nav-menu {
+        position: static;
+        display: flex !important;
+        padding: 0;
+        background: transparent;
+        box-shadow: none;
+        animation: none;
+        overflow: visible;
+    }
+
+    .nav-menu li {
+        margin: 0 0 0 1.5rem;
+        opacity: 1;
+        animation: none;
+    }
+
+    .nav-menu a {
+        display: inline-block;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
+        background: transparent;
+        border: none;
+        text-align: left;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+        background: #48bb78;
+        transform: none;
+    }
 }
 
 /* ============= LAYOUT PRINCIPAL ============= */
