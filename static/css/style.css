@@ -46,7 +46,6 @@ body {
     color: #2d3748;
 }
 
-/* Menú hamburguesa para móvil */
 .menu-toggle {
     display: block;
     font-size: 1.5rem;
@@ -456,53 +455,165 @@ main {
     font-size: 0.85rem;
 }
 
-/* ============= RECOMENDACIONES ============= */
+/* ============= RECOMENDACIONES - BIBLIOTECA FINANCIERA ============= */
+.recomendaciones-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
 .recomendaciones-section {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    width: 100%;
 }
 
 .section-title {
     font-size: 1.5rem;
     color: #2d3748;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #48bb78;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #48bb78;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: #2d3748;
 }
 
 .cards-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
 }
 
 .recomendacion-card {
     background: white;
-    padding: 1.25rem;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #e2e8f0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.recomendacion-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.recomendacion-card.featured {
+    border: 2px solid #48bb78;
+    background: linear-gradient(135deg, #ffffff, #f0fff4);
 }
 
 .recomendacion-card h3 {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     color: #2d3748;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
 }
 
 .card-descripcion {
     color: #4a5568;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
     font-size: 0.95rem;
+    line-height: 1.6;
+    flex-grow: 1;
 }
 
 .card-beneficio {
     background: #f7fafc;
-    padding: 0.75rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
     color: #48bb78;
+    border-left: 3px solid #48bb78;
+    margin-top: 0.5rem;
+}
+
+.card-ejemplo,
+.card-dato {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #ebf8ff;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #2c5282;
+    border-left: 3px solid #4299e1;
+}
+
+.card-dato {
+    background: #feebc8;
+    color: #7b341e;
+    border-left-color: #ed8936;
+}
+
+/* Tips Grid */
+.tips-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 1rem 0 2rem;
+}
+
+.tip-card {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.tip-categoria {
+    display: inline-block;
+    padding: 0.35rem 0.75rem;
+    background: #48bb78;
+    color: white;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tip-consejo {
+    color: #2d3748;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 /* ============= CALCULADORA ============= */
+.calculadora-section {
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.calculadora-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+}
+
+.calculadora-descripcion {
+    color: #718096;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+}
+
 .calculadora-inputs {
     display: grid;
     grid-template-columns: 1fr;
@@ -510,10 +621,25 @@ main {
     margin-bottom: 1.5rem;
 }
 
+.calculadora-inputs .form-group {
+    margin-bottom: 0;
+}
+
+.calculadora-inputs .form-group label {
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.calculadora-inputs .form-group input {
+    padding: 0.75rem;
+    font-size: 0.95rem;
+}
+
 .resultado-interes {
     background: #f7fafc;
-    padding: 1.25rem;
+    padding: 1.5rem;
     border-radius: 12px;
+    border: 1px solid #e2e8f0;
 }
 
 .resultado-item {
@@ -528,16 +654,24 @@ main {
     border-bottom: none;
 }
 
-.valor-principal {
-    font-size: 1.25rem;
+.resultado-item p:first-child {
+    color: #718096;
+    font-size: 0.9rem;
+}
+
+.resultado-item p:last-child {
     font-weight: 700;
-    color: #48bb78;
+    font-size: 1.1rem;
+}
+
+.valor-principal {
+    color: #48bb78 !important;
+    font-size: 1.25rem !important;
 }
 
 .valor-ganancia {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #4299e1;
+    color: #4299e1 !important;
+    font-size: 1.1rem !important;
 }
 
 /* ============= NOTIFICACIONES ============= */
@@ -570,9 +704,21 @@ footer {
     color: #718096;
     font-size: 0.9rem;
     border-top: 1px solid #e2e8f0;
+    margin-top: 2rem;
 }
 
-/* ============= MEDIA QUERIES PARA TABLET Y DESKTOP ============= */
+/* ============= MEDIA QUERIES PARA TABLET ============= */
+@media (min-width: 640px) {
+    .tips-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .calculadora-inputs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============= MEDIA QUERIES PARA DESKTOP ============= */
 @media (min-width: 768px) {
     .menu-toggle {
         display: none;
@@ -654,12 +800,16 @@ footer {
         gap: 2rem;
     }
 
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .tips-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
     .calculadora-inputs {
         grid-template-columns: repeat(4, 1fr);
-    }
-
-    .cards-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 
     .resultado-item {
@@ -681,4 +831,29 @@ footer {
     .page-title {
         font-size: 2.5rem;
     }
+    
+    .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* ============= UTILIDADES ============= */
+.text-center {
+    text-align: center;
+}
+
+.mt-2 {
+    margin-top: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 1rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
 }
