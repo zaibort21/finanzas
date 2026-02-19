@@ -677,6 +677,61 @@ document.addEventListener('DOMContentLoaded', function() {
             actualizarTotalGastos();
         }
     });
+
+    // ============= MENÚ HAMBURGUESA PARA MÓVIL =============
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (menuToggle && navMenu) {
+        // Abrir/cerrar menú al hacer clic en el botón
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+            
+            // Cambiar el ícono entre ☰ y ✕
+            if (navMenu.classList.contains('active')) {
+                menuToggle.textContent = '✕';
+                menuToggle.style.color = '#48bb78';
+            } else {
+                menuToggle.textContent = '☰';
+                menuToggle.style.color = '#1a1a1a';
+            }
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                menuToggle.textContent = '☰';
+                menuToggle.style.color = '#1a1a1a';
+            });
+        });
+
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                navMenu.classList.remove('active');
+                menuToggle.textContent = '☰';
+                menuToggle.style.color = '#1a1a1a';
+            }
+        });
+
+        // Prevenir que el clic dentro del menú lo cierre
+        navMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+    // Marcar el enlace activo según la URL actual
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href === currentPath || (currentPath === '/' && href === '/')) {
+            link.classList.add('active');
+        } else if (currentPath.includes(href) && href !== '/') {
+            link.classList.add('active');
+        }
+    });
 });
 
 // ============= EXPORTAR FUNCIONES PARA USO GLOBAL =============
