@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metas de Ahorro - FinanzasPro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">💰</span>
+                <span class="logo-text">FinanzasPro</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/analisis">Análisis 50/30/20</a></li>
+                <li><a href="/metas" class="active">Metas de Ahorro</a></li>
+                <li><a href="/recomendaciones">Biblioteca Financiera</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1 class="page-title">🎯 Planificador de Metas</h1>
+        <p class="page-subtitle">Descubre cuánto tiempo te tomará alcanzar tus sueños</p>
+
+        <div class="metas-grid">
+            <div class="input-section card">
+                <h2>Define tu Meta</h2>
+                
+                <div class="form-group">
+                    <label for="meta-nombre">Nombre de la Meta</label>
+                    <input type="text" id="meta-nombre" placeholder="Ej: Viaje a Europa, Enganche de Casa, Fondo de Emergencia">
+                </div>
+<div class="form-group">
+    <label for="moneda">Moneda</label>
+    <select id="moneda" class="moneda-selector">
+        <option value="COP" selected>🇨🇴 Peso Colombiano (COP) - $</option>
+        <option value="USD">🇺🇸 Dólar Americano (USD) - US$</option>
+        <option value="EUR">🇪🇺 Euro (EUR) - €</option>
+        <option value="MXN">🇲🇽 Peso Mexicano (MXN) - MX$</option>
+        <option value="ARS">🇦🇷 Peso Argentino (ARS) - AR$</option>
+        <option value="CLP">🇨🇱 Peso Chileno (CLP) - CL$</option>
+        <option value="PEN">🇵🇪 Sol Peruano (PEN) - S/</option>
+        <option value="BRL">🇧🇷 Real Brasileño (BRL) - R$</option>
+    </select>
+    <small class="form-text">Selecciona la moneda en la que manejas tu dinero</small>
+</div>
+                <div class="form-group">
+                    <label for="monto-objetivo">Monto Objetivo ($)</label>
+                    <input type="number" id="monto-objetivo" placeholder="Ej: 100000" min="0" step="1000">
+                </div>
+
+                <div class="form-group">
+                    <label for="ahorro-actual">Ahorro Actual ($)</label>
+                    <input type="number" id="ahorro-actual" placeholder="Ej: 10000" min="0" step="1000" value="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="ahorro-mensual">Ahorro Mensual ($)</label>
+                    <input type="number" id="ahorro-mensual" placeholder="Ej: 5000" min="0" step="100">
+                    <small class="form-text">¿Cuánto puedes apartar cada mes?</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="plazo-deseado">¿Tienes un plazo en mente? (meses, opcional)</label>
+                    <input type="number" id="plazo-deseado" placeholder="Ej: 24" min="1" step="1">
+                </div>
+
+                <button id="calcular-meta" class="btn-primary">Calcular Proyección</button>
+            </div>
+
+            <div class="result-section card" id="resultado-meta" style="display: none;">
+                <h2>Resultado de tu Proyección</h2>
+                
+                <div id="proyeccion-contenido">
+                    <!-- Resultados dinámicos -->
+                </div>
+
+                <div class="motivacion">
+                    <h3>💪 Consejos para Acelerar tu Meta</h3>
+                    <ul>
+                        <li>Automatiza tu ahorro: programa una transferencia el día que recibes tu ingreso</li>
+                        <li>Busca ingresos extra: freelance, vende cosas que no uses</li>
+                        <li>Invierte tu ahorro: considera CETES, pagarés o ETFs para que tu dinero trabaje</li>
+                        <li>Revisa suscripciones: ¿realmente usas todas?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('calcular-meta').addEventListener('click', function() {
+            const montoObjetivo = parseFloat(document.getElementById('monto-objetivo').value) || 0;
+            const ahorroActual = parseFloat(document.getElementById('ahorro-actual').value) || 0;
+            const ahorroMensual = parseFloat(document.getElementById('ahorro-mensual').value) || 0;
+            const plazoDeseado = document.getElementById('plazo-deseado').value;
+            
+            if (montoObjetivo <= 0) {
+                alert('Por favor ingresa un monto objetivo válido');
+                return;
+            }
+
+            if (ahorroMensual <= 0 && !plazoDeseado) {
+                alert('Ingresa un ahorro mensual o un plazo deseado');
+                return;
+            }
+
+            const data = {
+                monto_objetivo: montoObjetivo,
+                ahorro_actual: ahorroActual,
+                ahorro_mensual: ahorroMensual,
+                plazo_deseado: plazoDeseado || null
+            };
+
+            fetch('/api/proyectar-meta', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                mostrarProyeccion(data);
+            });
+        });
+
+        function mostrarProyeccion(data) {
+            document.getElementById('resultado-meta').style.display = 'block';
+            
+            const contenido = document.getElementById('proyeccion-contenido');
+            
+            if (data.error) {
+                contenido.innerHTML = `<p class="error">${data.error}</p>`;
+                return;
+            }
+
+            if (data.tipo_calculo === 'por_plazo') {
+                contenido.innerHTML = `
+                    <div class="proyeccion-card">
+                        <p class="proyeccion-label">Ahorro mensual necesario:</p>
+                        <p class="proyeccion-valor">$${data.ahorro_mensual_necesario.toLocaleString('es-MX')}</p>
+                    </div>
+                    <div class="proyeccion-card">
+                        <p class="proyeccion-label">Plazo:</p>
+                        <p class="proyeccion-valor">${data.meses_para_meta} meses</p>
+                    </div>
+                    <div class="proyeccion-card">
+                        <p class="proyeccion-label">Fecha estimada de logro:</p>
+                        <p class="proyeccion-valor">${data.fecha_estimada}</p>
+                    </div>
+                `;
+            } else {
+                contenido.innerHTML = `
+                    <div class="proyeccion-card">
+                        <p class="proyeccion-label">Tiempo necesario:</p>
+                        <p class="proyeccion-valor">${data.meses_para_meta} meses</p>
+                        <p class="proyeccion-detalle">(${data.años_para_meta} años)</p>
+                    </div>
+                    <div class="proyeccion-card">
+                        <p class="proyeccion-label">Fecha estimada de logro:</p>
+                        <p class="proyeccion-valor">${data.fecha_estimada}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
