@@ -468,7 +468,7 @@ function mostrarResultadosAnalisis(data) {
         <h3>💰 Ahorro Disponible para Metas</h3>
         <p class="ahorro-monto">${formatearMoneda(data.ahorro_disponible)} mensuales</p>
         <p class="ahorro-texto">Este es el dinero que podrías destinar a nuevas metas de ahorro según la regla 50/30/20.</p>
-        <a href="/metas" class="btn-small">🎯 Planificar Meta →</a>
+        <a href="metas.html" class="btn-small">🎯 Planificar Meta →</a>
     `;
     
     resultadosDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
