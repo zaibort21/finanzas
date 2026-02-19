@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanzasPro - Tu Coach Financiero Personal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">💰</span>
+                <span class="logo-text">FinanzasPro</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/" class="active">Inicio</a></li>
+                <li><a href="/analisis">Análisis 50/30/20</a></li>
+                <li><a href="/metas">Metas de Ahorro</a></li>
+                <li><a href="/recomendaciones">Biblioteca Financiera</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Transforma tu relación con el dinero</h1>
+                <p class="hero-subtitle">Análisis inteligente, metas claras y educación financiera para alcanzar la libertad que mereces.</p>
+                <div class="hero-stats">
+                    <div class="stat-card">
+                        <span class="stat-number">50/30/20</span>
+                        <span class="stat-label">Regla de Oro</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">+10</span>
+                        <span class="stat-label">Estrategias</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">FIRE</span>
+                        <span class="stat-label">Libertad Financiera</span>
+                    </div>
+                </div>
+                <a href="/analisis" class="btn-primary">Comenzar Análisis →</a>
+            </div>
+            <div class="hero-image">
+                <img src="{{ url_for('static', filename='dinero.png') }}" alt="Financial Success Illustration">
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Tu camino hacia la libertad financiera</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Análisis 50/30/20</h3>
+                    <p>Clasifica automáticamente tus gastos y recibe diagnósticos personalizados sobre tu salud financiera.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Planificador de Metas</h3>
+                    <p>Calcula exactamente cuánto tiempo te tomará alcanzar tus sueños con tu ritmo de ahorro actual.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Biblioteca Financiera</h3>
+                    <p>Accede a las mejores estrategias de ahorro, inversión y técnicas para salir de deudas.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="cta-content">
+                <h2>Comienza hoy mismo</h2>
+                <p>No necesitas ser experto. Solo necesitas empezar.</p>
+                <a href="/analisis" class="btn-secondary">Analizar mis finanzas</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 FinanzasPro - Tu coach financiero personal</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
