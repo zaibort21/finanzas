@@ -743,4 +743,27 @@ window.analizarFinanzas = analizarFinanzas;
 window.calcularMetaAhorro = calcularMetaAhorro;
 window.calcularInteresCompuesto = calcularInteresCompuesto;
 window.formatearMoneda = formatearMoneda;
+
 window.mostrarNotificacion = mostrarNotificacion;
+// ============= BOTTOM NAVIGATION =============
+function setActiveBottomNav() {
+    const currentPath = window.location.pathname;
+    const navItems = document.querySelectorAll('.bottom-nav-item');
+    
+    navItems.forEach(item => {
+        item.classList.remove('active');
+        const href = item.getAttribute('href');
+        
+        if (currentPath === '/' && href === '/') {
+            item.classList.add('active');
+        } else if (currentPath.includes(href) && href !== '/') {
+            item.classList.add('active');
+        }
+    });
+}
+
+// Llamar a la función cuando carga la página
+setActiveBottomNav();
+
+// También actualizar cuando se navega con el botón de atrás
+window.addEventListener('popstate', setActiveBottomNav);
