@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Análisis 50/30/20 - FinanzasPro</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -17,7 +17,7 @@
             <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="/">Inicio</a></li>
-                <li><a href="/analisis">Análisis 50/30/20</a></li>
+                <li><a href="/analisis" class="active">Análisis 50/30/20</a></li>
                 <li><a href="/metas">Metas de Ahorro</a></li>
                 <li><a href="/recomendaciones">Biblioteca Financiera</a></li>
             </ul>
@@ -33,8 +33,22 @@
                 <h2>Datos Financieros</h2>
                 
                 <div class="form-group">
-                    <label for="ingresos">Ingresos Mensuales ($)</label>
+                    <label for="ingresos">Ingresos Mensuales</label>
                     <input type="number" id="ingresos" placeholder="Ej: 50000" min="0" step="1000">
+                </div>
+
+                <div class="form-group">
+                    <label for="moneda">Moneda</label>
+                    <select id="moneda" class="moneda-selector">
+                        <option value="COP" selected>🇨🇴 Peso Colombiano (COP) - $</option>
+                        <option value="USD">🇺🇸 Dólar Americano (USD) - US$</option>
+                        <option value="EUR">🇪🇺 Euro (EUR) - €</option>
+                        <option value="MXN">🇲🇽 Peso Mexicano (MXN) - MX$</option>
+                        <option value="ARS">🇦🇷 Peso Argentino (ARS) - AR$</option>
+                        <option value="CLP">🇨🇱 Peso Chileno (CLP) - CL$</option>
+                        <option value="PEN">🇵🇪 Sol Peruano (PEN) - S/</option>
+                        <option value="BRL">🇧🇷 Real Brasileño (BRL) - R$</option>
+                    </select>
                 </div>
 
                 <h3>Gastos</h3>
@@ -42,15 +56,15 @@
                     <!-- Los gastos se agregarán dinámicamente aquí -->
                 </div>
 
-                <button id="agregar-gasto" class="btn-secondary">+ Agregar Gasto</button>
-                <button id="analizar-btn" class="btn-primary" style="margin-top: 20px;">Analizar Finanzas</button>
+                <button type="button" id="agregar-gasto" class="btn-secondary">+ Agregar Gasto</button>
+                <button type="button" id="analizar-btn" class="btn-primary" style="margin-top: 20px;">Analizar Finanzas</button>
             </div>
 
             <div class="result-section card" id="resultados" style="display: none;">
                 <h2>Resultados del Análisis</h2>
                 
                 <div class="resumen-ingresos">
-                    <p>Ingresos Mensuales: <strong>$<span id="resumen-ingresos">0</span></strong></p>
+                    <p>Ingresos Mensuales: <strong><span id="resumen-ingresos">0</span></strong></p>
                 </div>
 
                 <div class="grafica-barras">
@@ -88,110 +102,54 @@
         </div>
     </main>
 
-    <script>
-        // Template para gastos
-        let gastoCount = 0;
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>💰 FinanzasPro</h4>
+                <p>Tu asistente personal para alcanzar la libertad financiera.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/analisis">Análisis 50/30/20</a></li>
+                    <li><a href="/metas">Metas de Ahorro</a></li>
+                    <li><a href="/recomendaciones">Biblioteca Financiera</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📧 info@finanzaspro.com</p>
+                <p>📱 +57 300 123 4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 FinanzasPro - Todos los derechos reservados</p>
+            <p>Hecho con ❤️ para tu libertad financiera</p>
+        </div>
+    </footer>
 
-        document.getElementById('agregar-gasto').addEventListener('click', function() {
-            const container = document.getElementById('gastos-container');
-            const gastoDiv = document.createElement('div');
-            gastoDiv.className = 'gasto-item';
-            gastoDiv.innerHTML = `
-                <input type="text" placeholder="Descripción" class="gasto-descripcion">
-                <input type="number" placeholder="Monto" class="gasto-monto" min="0" step="100">
-                <select class="gasto-categoria">
-                    <option value="necesidad">Necesidad</option>
-                    <option value="deseo">Deseo</option>
-                    <option value="ahorro">Ahorro/Inversión</option>
-                </select>
-                <button class="btn-eliminar" onclick="this.parentElement.remove()">🗑️</button>
-            `;
-            container.appendChild(gastoDiv);
-            gastoCount++;
-        });
+    <!-- BOTTOM NAVIGATION - PARA MÓVIL -->
+    <nav class="bottom-nav">
+        <a href="/" class="bottom-nav-item" id="nav-inicio">
+            <span class="nav-icon">🏠</span>
+            <span>Inicio</span>
+        </a>
+        <a href="/analisis" class="bottom-nav-item" id="nav-analisis">
+            <span class="nav-icon">📊</span>
+            <span>Análisis</span>
+        </a>
+        <a href="/metas" class="bottom-nav-item" id="nav-metas">
+            <span class="nav-icon">🎯</span>
+            <span>Metas</span>
+        </a>
+        <a href="/recomendaciones" class="bottom-nav-item" id="nav-biblioteca">
+            <span class="nav-icon">📚</span>
+            <span>Biblioteca</span>
+        </a>
+    </nav>
 
-        // Agregar primer gasto por defecto
-        window.onload = function() {
-            document.getElementById('agregar-gasto').click();
-            document.getElementById('agregar-gasto').click();
-            document.getElementById('agregar-gasto').click();
-        };
-
-        document.getElementById('analizar-btn').addEventListener('click', function() {
-            const ingresos = parseFloat(document.getElementById('ingresos').value) || 0;
-            
-            const gastos = [];
-            document.querySelectorAll('.gasto-item').forEach(item => {
-                const descripcion = item.querySelector('.gasto-descripcion').value;
-                const monto = parseFloat(item.querySelector('.gasto-monto').value) || 0;
-                const categoria = item.querySelector('.gasto-categoria').value;
-                
-                if (monto > 0) {
-                    gastos.push({ descripcion, monto, categoria });
-                }
-            });
-
-            if (ingresos <= 0) {
-                alert('Por favor ingresa tus ingresos mensuales');
-                return;
-            }
-
-            if (gastos.length === 0) {
-                alert('Agrega al menos un gasto');
-                return;
-            }
-
-            // Enviar al backend
-            fetch('/api/analizar', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ ingresos, gastos })
-            })
-            .then(response => response.json())
-            .then(data => {
-                mostrarResultados(data);
-            });
-        });
-
-        function mostrarResultados(data) {
-            document.getElementById('resultados').style.display = 'block';
-            
-            // Actualizar resumen
-            document.getElementById('resumen-ingresos').textContent = data.ingresos.toLocaleString('es-MX');
-            
-            // Actualizar barras
-            document.getElementById('barra-necesidades').style.width = data.porcentajes.necesidades + '%';
-            document.getElementById('porc-necesidades').textContent = data.porcentajes.necesidades + '%';
-            
-            document.getElementById('barra-deseos').style.width = data.porcentajes.deseos + '%';
-            document.getElementById('porc-deseos').textContent = data.porcentajes.deseos + '%';
-            
-            document.getElementById('barra-ahorro').style.width = data.porcentajes.ahorro + '%';
-            document.getElementById('porc-ahorro').textContent = data.porcentajes.ahorro + '%';
-            
-            // Mostrar diagnósticos
-            const diagnosticosDiv = document.getElementById('diagnosticos-container');
-            diagnosticosDiv.innerHTML = '<h3>Diagnóstico Personalizado</h3>';
-            
-            data.diagnosticos.forEach(diag => {
-                const diagElement = document.createElement('div');
-                diagElement.className = `diagnostico diagnostico-${diag.tipo}`;
-                diagElement.innerHTML = `
-                    <p class="diagnostico-mensaje">${diag.mensaje}</p>
-                    <p class="diagnostico-consejo">💡 ${diag.consejo}</p>
-                `;
-                diagnosticosDiv.appendChild(diagElement);
-            });
-            
-            // Mostrar ahorro disponible
-            const ahorroDiv = document.getElementById('ahorro-disponible-container');
-            ahorroDiv.innerHTML = `
-                <h3>💰 Ahorro Disponible para Metas</h3>
-                <p class="ahorro-monto">$${data.ahorro_disponible.toLocaleString('es-MX')} mensuales</p>
-                <p class="ahorro-texto">Este es el dinero que podrías destinar a nuevas metas de ahorro según la regla 50/30/20.</p>
-                <a href="/metas" class="btn-small">Planificar Meta →</a>
-            `;
-        }
-    </script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
