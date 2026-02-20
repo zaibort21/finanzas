@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinanzasPro - Tu Coach Financiero Personal</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -16,7 +16,7 @@
             </div>
             <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="/">Inicio</a></li>
+                <li><a href="/" class="active">Inicio</a></li>
                 <li><a href="/analisis">Análisis 50/30/20</a></li>
                 <li><a href="/metas">Metas de Ahorro</a></li>
                 <li><a href="/recomendaciones">Biblioteca Financiera</a></li>
@@ -43,10 +43,10 @@
                         <span class="stat-label">Libertad Financiera</span>
                     </div>
                 </div>
-                <a href="analisis.html" class="btn-primary">Comenzar Análisis →</a>
+                <a href="/analisis" class="btn-primary">Comenzar Análisis →</a>
             </div>
             <div class="hero-image">
-                <img src="static/dinero.png" alt="Financial Success Illustration">
+                <img src="https://illustrations.popsy.co/amber/financial-success.svg" alt="Financial Success Illustration">
             </div>
         </section>
 
@@ -70,20 +70,56 @@
                 </div>
             </div>
         </section>
-
-        <section class="cta">
-            <div class="cta-content">
-                <h2>Comienza hoy mismo</h2>
-                <p>No necesitas ser experto. Solo necesitas empezar.</p>
-                <a href="analisis.html" class="btn-secondary">Analizar mis finanzas</a>
-            </div>
-        </section>
     </main>
 
+    <!-- FOOTER -->
     <footer>
-        <p>© 2024 FinanzasPro - Tu coach financiero personal</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>💰 FinanzasPro</h4>
+                <p>Tu asistente personal para alcanzar la libertad financiera.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/analisis">Análisis 50/30/20</a></li>
+                    <li><a href="/metas">Metas de Ahorro</a></li>
+                    <li><a href="/recomendaciones">Biblioteca Financiera</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>📧 info@finanzaspro.com</p>
+                <p>📱 +57 300 123 4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 FinanzasPro - Todos los derechos reservados</p>
+            <p>Hecho con ❤️ para tu libertad financiera</p>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- BOTTOM NAVIGATION - PARA MÓVIL (ANTES DE CERRAR BODY) -->
+    <nav class="bottom-nav">
+        <a href="/" class="bottom-nav-item" id="nav-inicio">
+            <span class="nav-icon">🏠</span>
+            <span>Inicio</span>
+        </a>
+        <a href="/analisis" class="bottom-nav-item" id="nav-analisis">
+            <span class="nav-icon">📊</span>
+            <span>Análisis</span>
+        </a>
+        <a href="/metas" class="bottom-nav-item" id="nav-metas">
+            <span class="nav-icon">🎯</span>
+            <span>Metas</span>
+        </a>
+        <a href="/recomendaciones" class="bottom-nav-item" id="nav-biblioteca">
+            <span class="nav-icon">📚</span>
+            <span>Biblioteca</span>
+        </a>
+    </nav>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
