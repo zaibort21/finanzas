@@ -11,9 +11,10 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <span class="logo-icon">💰</span>
-                <span class="logo-text">FinanzasPro</span>
-            </div>
+    <img src="{{ url_for('static', filename='images/logosimon.png') }}" 
+         alt="Don Bolívar" 
+         class="logo-imagen">
+</div>
             <button class="menu-toggle" id="menuToggle" aria-label="Menú">☰</button>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="/" class="active">Inicio</a></li>
@@ -123,3 +124,4 @@
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
+
